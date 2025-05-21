@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/utils.dart';
+import 'package:sarpras_mobile/widgets/InputBox.dart';
 import 'package:sarpras_mobile/controllers/loginController.dart';
 
 class Login extends StatelessWidget {
@@ -51,23 +52,4 @@ class Login extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget InputBox({
-  required String hint,
-  required TextEditingController txtController,
-  required bool isSecured,
-}) {
-  return Container(
-    padding: EdgeInsets.symmetric(horizontal: 15),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(28),
-      border: Border.all(color: Colors.grey),
-    ),
-    child: TextField(
-      obscureText: isSecured,
-      decoration: InputDecoration(border: InputBorder.none, hintText: hint),
-      controller: txtController,
-    ),
-  );
 }

@@ -91,6 +91,11 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_web_plugins:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   get:
     dependency: "direct main"
     description:
@@ -99,6 +104,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.7.2"
+  go_router:
+    dependency: "direct main"
+    description:
+      name: go_router
+      sha256: "0b1e06223bee260dee31a171fb1153e306907563a0b0225e8c1733211911429a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "15.1.2"
   http_parser:
     dependency: transitive
     description:
@@ -139,6 +152,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.1.1"
+  logging:
+    dependency: transitive
+    description:
+      name: logging
+      sha256: c8245ada5f1717ed44271ed1c26b8ce85ca3228fd2ffdb75468ab01979309d61
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.0"
   matcher:
     dependency: transitive
     description:
@@ -176,6 +197,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  sliding_clipped_nav_bar:
+    dependency: "direct main"
+    description:
+      name: sliding_clipped_nav_bar
+      sha256: f43ba9856d25515faa012f4f3763080f8a93fa6edf11a3c3ca358b8982de6411
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.1"
   source_span:
     dependency: transitive
     description:
@@ -258,4 +287,4 @@ packages:
     version: "1.1.1"
 sdks:
   dart: ">=3.7.2 <4.0.0"
-  flutter: ">=3.18.0-18.0.pre.54"
+  flutter: ">=3.22.0"
