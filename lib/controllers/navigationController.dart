@@ -38,8 +38,7 @@ class NavigationController {
                 path: "/home",
                 name: "Home",
                 builder:
-                    (BuildContext context, GoRouterState state) =>
-                        const HomePage(),
+                    (BuildContext context, GoRouterState state) => HomePage(),
                 routes: [
                   GoRoute(
                     path: 'subHome',
