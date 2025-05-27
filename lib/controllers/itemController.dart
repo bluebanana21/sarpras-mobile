@@ -25,6 +25,25 @@ Future<List<ItemModel>> fetchItems() async {
   }
 }
 
+Future<List<ItemModel>> fetchItemsSpecific(int id) async {
+  try {
+    final response = await dio.get('$ItemApi/$id');
+    print(response);
+
+    if (response.statusCode == 200) {
+      print('fetched items succesfully 200');
+      final data = response.data['items'];
+      return data.map<ItemModel>((item) => ItemModel.fromJson(item)).toList();
+    } else {
+      print("failed to load items");
+      throw Exception('Failed to load items: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error fetching items: $e');
+    throw Exception('Error fetching Items dumbass: $e');
+  }
+}
+
 List<ItemModel> parseItems(dynamic responseBody) {
   final Map<String, dynamic> jsonResponse = json.decode(responseBody);
   final List<dynamic> data = jsonResponse['items'];

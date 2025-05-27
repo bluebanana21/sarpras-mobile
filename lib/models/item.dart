@@ -1,4 +1,5 @@
 class ItemModel {
+  int? id;
   String? name;
   String? image;
   String? description;
@@ -8,6 +9,7 @@ class ItemModel {
   String? status;
 
   ItemModel({
+    required this.id,
     required this.name,
     required this.image,
     required this.description,
@@ -19,6 +21,7 @@ class ItemModel {
 
   factory ItemModel.fromJson(Map<String, dynamic> json) {
     return ItemModel(
+      id: json['id'] ?? '',
       name: json['name'] ?? '',
       image: json['image_url'] ?? '',
       description: json['description'] ?? '',
@@ -29,4 +32,3 @@ class ItemModel {
     );
   }
 }
-

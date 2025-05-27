@@ -28,13 +28,6 @@ class _MainWrapperState extends State<MainWrapper> {
         height: double.infinity,
         child: widget.navigationShell,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.push(context.namedLocation('Player'));
-        },
-        backgroundColor: Colors.deepPurpleAccent,
-        child: const Icon(Icons.play_arrow),
-      ),
       bottomNavigationBar: SlidingClippedNavBar(
         backgroundColor: Colors.white,
         onButtonPressed: (index) {

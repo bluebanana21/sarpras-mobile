@@ -1,0 +1,123 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+
+class ItemDetail extends StatefulWidget {
+  final String name;
+  final String desc;
+  final String image;
+  final String assignedNum;
+  final String status;
+  final int itemTypeId;
+  final int subCatId;
+  final int id;
+
+  const ItemDetail({
+    super.key,
+    required this.name,
+    required this.desc,
+    required this.image,
+    required this.assignedNum,
+    required this.status,
+    required this.itemTypeId,
+    required this.subCatId,
+    required this.id,
+  });
+
+  @override
+  State<ItemDetail> createState() => _ItemDetailState();
+}
+
+class _ItemDetailState extends State<ItemDetail> {
+  @override
+  Widget build(BuildContext context) {
+    MaterialColor statusColor = Colors.red;
+
+    if (widget.status.toLowerCase().contains("available")) {
+      statusColor = Colors.green;
+    } else if (widget.status.toLowerCase().contains("damaged")) {
+      statusColor = Colors.red;
+    } else if (widget.status.toLowerCase().contains("borrowed")) {
+      statusColor = Colors.yellow;
+    }
+
+    return Scaffold(
+      backgroundColor: Color(0xdededede),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Container(
+          padding: const EdgeInsets.all(24.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundColor: Color(0xff94d500),
+                    child: IconButton(
+                      icon: Icon(Icons.search, color: Colors.black),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ),
+                  Text(
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                    "Item Detail",
+                  ),
+                  SizedBox(width: 15, height: 10),
+                ],
+              ),
+
+              Container(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Image.network('http://127.0.0.1:8000/${widget.image}'),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    widget.name,
+                  ),
+                  Text(
+                    style: TextStyle(color: Colors.grey),
+                    '# ${widget.assignedNum}',
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('ID:${widget.id}'),
+                  Text(
+                    style: TextStyle(color: statusColor),
+                    '${widget.status}',
+                  ),
+                ],
+              ),
+              Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [Text('Description'), Text(widget.desc)],
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  print('Requested item');
+                },
+                child: Text('Request'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

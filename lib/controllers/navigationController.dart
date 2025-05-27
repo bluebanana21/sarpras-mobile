@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sarpras_mobile/screens/HistoryPage.dart';
 import 'package:sarpras_mobile/widgets/MainWrapper.dart';
-import 'package:sarpras_mobile/screens/home.dart';
-import 'package:sarpras_mobile/screens/itemPage.dart';
+import 'package:sarpras_mobile/screens/Home.dart';
 
 class NavigationController {
   NavigationController._();
@@ -46,7 +46,7 @@ class NavigationController {
                     pageBuilder:
                         (context, state) => CustomTransitionPage<void>(
                           key: state.pageKey,
-                          child: const ItemPage(),
+                          child: HistoryPage(),
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) =>
                                   FadeTransition(
