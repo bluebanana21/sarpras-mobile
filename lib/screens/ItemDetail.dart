@@ -134,39 +134,93 @@ class _ItemDetailState extends State<ItemDetail> {
               SizedBox(
                 width: double.infinity,
                 height: 48,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF00B70C),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return RequestItemForm(
-                            borrowerId: 1,
-                            itemId: widget.id,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                  child: const Text(
-                    'Request',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                child: CustomRequestButton(
+                  itemId: widget.id,
+                  itemStatus: widget.status,
                 ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class CustomRequestButton extends StatelessWidget {
+  final int itemId;
+  final String itemStatus;
+
+  const CustomRequestButton({
+    super.key,
+    required this.itemId,
+    required this.itemStatus,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Builder(
+        builder: (context) {
+          if (itemStatus == 'available') {
+            return SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF00B70C),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return RequestItemForm(borrowerId: 1, itemId: itemId);
+                      },
+                    ),
+                  );
+                },
+                child: const Text(
+                  'Request',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            );
+          } else if (itemStatus == 'damaged' || itemStatus == 'borrowed') {
+            return SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFFF0004),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: () {
+                  print('cant borrow dude sorry');
+                },
+                child: const Text(
+                  'Not Available',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            );
+          } else {
+            return const Text('Status unknown');
+          }
+        },
       ),
     );
   }

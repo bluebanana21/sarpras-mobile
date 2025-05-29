@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/utils.dart';
 import 'package:sarpras_mobile/controllers/categoryController.dart';
 import 'package:sarpras_mobile/controllers/itemController.dart';
 import 'package:sarpras_mobile/models/category.dart';
 import 'package:sarpras_mobile/models/item.dart';
+import 'package:sarpras_mobile/models/user.dart';
 import 'package:sarpras_mobile/widgets/ItemCard.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,6 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final User user = Get.find<User>();
   final List<ItemModel> _items = [];
   final List<CategoryModel> _categories = [];
 
@@ -25,6 +29,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    print('logged in as: ${user.email}');
     _fetchData();
   }
 
@@ -71,7 +76,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   SizedBox(width: 20),
                   Text(
-                    'Sisfo Sarpras',
+                    'Sisfo Sarpras ${user.name}',
                     style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
                   ),
                   IconButton(

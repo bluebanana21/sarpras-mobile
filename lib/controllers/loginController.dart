@@ -2,8 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:get/state_manager.dart';
+import 'package:sarpras_mobile/controllers/navigationController.dart';
 import 'package:sarpras_mobile/models/user.dart';
+import 'package:sarpras_mobile/screens/Home.dart';
 
 class Logincontroller extends GetxController {
   TextEditingController email = TextEditingController();
@@ -11,17 +14,26 @@ class Logincontroller extends GetxController {
 
   String _message = "";
 
-  Future<void> submit() async {
+  Future<void> submit(BuildContext context) async {
     User user = User(email: email.text.trim(), password: password.text.trim());
 
     bool validatedResult = validateUser(user);
     if (validatedResult) {
-      bool serverResponse = await authenticateUser(user);
-      if (serverResponse) {
-        await showMessage(
-          context: Get.context!,
-          title: 'Success!',
-          message: 'User login successfull',
+      User? userData = await authenticateUser(user);
+      if (userData != null) {
+        print('gooo tooo hommmmmmmmeeeeeee');
+
+        Get.put<User>(userData);
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return MaterialApp.router(
+                routerConfig: NavigationController.router,
+              );
+            },
+          ),
         );
       } else {
         await showMessage(
@@ -55,7 +67,7 @@ class Logincontroller extends GetxController {
     return true;
   }
 
-  Future<bool> authenticateUser(User user) async {
+  Future<User?> authenticateUser(User user) async {
     Dio dio = Dio(BaseOptions(connectTimeout: Duration(seconds: 5)));
     String _apiUrl = "http://127.0.0.1:8000/api/login";
 
@@ -67,12 +79,13 @@ class Logincontroller extends GetxController {
 
       final response = await dio.post(_apiUrl, data: requestData);
       if (response.statusCode == 200) {
-        return true;
+        final data = response.data['user'];
+        return User.fromJson(data);
       } else {
-        return false;
+        return null;
       }
     } catch (e) {
-      return false;
+      return null;
     }
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/utils.dart';
 import 'package:sarpras_mobile/widgets/InputBox.dart';
+import 'package:sarpras_mobile/controllers/navigationController.dart';
 import 'package:sarpras_mobile/controllers/loginController.dart';
 
 class Login extends StatelessWidget {
@@ -40,7 +41,7 @@ class Login extends StatelessWidget {
                       print('Login Credentials ========');
                       print('${controller.email.text}');
                       print('${controller.password.text}');
-                      await controller.submit();
+                      await controller.submit(context);
                     },
                     child: Text('Login'),
                   ),
