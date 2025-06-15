@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/utils.dart';
@@ -20,6 +22,8 @@ class _HomePageState extends State<HomePage> {
   final List<ItemModel> _items = [];
   final List<CategoryModel> _categories = [];
 
+  Timer? _refreshTimer;
+
   bool _itemIsLoading = false;
   String _itemResponseMessage = "fetching data...";
 
@@ -30,7 +34,14 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     print('logged in as: ${user.email}');
+
     _fetchData();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   Future<void> _fetchData() async {

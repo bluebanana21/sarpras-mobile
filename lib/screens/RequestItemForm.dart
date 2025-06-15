@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:get/get.dart';
 import 'package:sarpras_mobile/controllers/requestController.dart';
 
@@ -18,6 +19,8 @@ class RequestItemForm extends StatefulWidget {
 
 class _RequestItemForm extends State<RequestItemForm> {
   final Requestcontroller controller = Get.put(Requestcontroller());
+
+  DateTime returnDate = DateTime.now();
 
   @override
   void initState() {
@@ -87,46 +90,75 @@ class _RequestItemForm extends State<RequestItemForm> {
                 alignment: Alignment.centerLeft,
                 child: Text('Date of Return'),
               ),
-              GestureDetector(
-                onTap: () async {
-                  DateTime? picked = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime.now(),
-                    lastDate: DateTime(2100),
-                  );
-                  if (picked != null) {
-                    setState(() {
-                      String isoDate = picked.toIso8601String();
-                      controller.returnDate = isoDate;
-                    });
-                  }
-                },
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 16.0,
-                    horizontal: 12.0,
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white,
-                  ),
-                  child: Text(
-                    controller.returnDate.toString().split(' ')[0],
-                    style: const TextStyle(fontSize: 16),
-                  ),
+
+              const SizedBox(height: 24),
+
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(3.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: TextButton(
+                  onPressed: () {
+                    DatePicker.showDateTimePicker(
+                      context,
+                      showTitleActions: true,
+                      minTime: DateTime(
+                        DateTime.now().year,
+                        DateTime.now().month,
+                        DateTime.now().day,
+                        DateTime.now().hour,
+                        DateTime.now().minute,
+                      ),
+                      maxTime: DateTime(2100, 1, 1),
+                      onChanged: (date) {
+                        setState(() {
+                          returnDate = date;
+                        });
+                        print('change $date');
+                      },
+                      onConfirm: (date) {
+                        setState(() {
+                          returnDate = date;
+                        });
+                        print('confirm $date');
+                      },
+                      currentTime: returnDate,
+
+                      locale: LocaleType.en,
+                    );
+                    String returnDateForm = returnDate.toIso8601String();
+                    controller.returnDate = returnDateForm;
+                  },
+                  child: Text("Date here $returnDate"),
                 ),
               ),
 
               const SizedBox(height: 24),
-
-              ElevatedButton(
-                onPressed: () async {
-                  await controller.submit(context);
-                },
-                child: const Text('Submit Request'),
+              SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF00B70C),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  onPressed: () async {
+                    await controller.submit(context);
+                  },
+                  child: const Text(
+                    'Submit Request',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

@@ -40,7 +40,7 @@ Future<List<ItemModel>> fetchItemsSpecific(int id) async {
     }
   } catch (e) {
     print('Error fetching items: $e');
-    throw Exception('Error fetching Items dumbass: $e');
+    throw Exception('Error fetching Items specific dumbass: $e');
   }
 }
 

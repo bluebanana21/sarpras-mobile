@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sarpras_mobile/models/item.dart';
 import 'package:sarpras_mobile/models/request.dart';
+import 'package:sarpras_mobile/screens/ItemDetail.dart';
 
 class Requestcontroller extends GetxController {
   late int borrowerId;
@@ -20,7 +22,8 @@ class Requestcontroller extends GetxController {
       reason: reason.text.trim(),
       return_date: returnDate,
       approval_status: 'pending',
-      approved_by: 1,
+      ongoing_status: null,
+      approved_by: null,
     );
 
     print(
@@ -90,18 +93,19 @@ class Requestcontroller extends GetxController {
     await showCupertinoDialog(
       context: context,
       builder:
-          (context) => CupertinoAlertDialog(
+          (dialogContext) => CupertinoAlertDialog(
             title: Text(title),
             content: Text(message),
             actions: [
               CupertinoDialogAction(
                 child: const Text('OK'),
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () async {
+                  Navigator.of(dialogContext).pop();
+                  Navigator.of(context).pop();
+                },
               ),
             ],
           ),
     );
   }
 }
-
-//  }

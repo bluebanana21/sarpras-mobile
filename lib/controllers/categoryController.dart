@@ -23,7 +23,7 @@ Future<List<CategoryModel>> fetchCategories() async {
     }
   } catch (e) {
     print('Error fetching categories: $e');
-    throw Exception('Error fetching Items dumbass: $e');
+    throw Exception('Error fetching categories dumbass: $e');
   }
 }
 

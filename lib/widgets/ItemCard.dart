@@ -28,8 +28,16 @@ class ItemCard extends StatefulWidget {
 }
 
 class _ItemCardState extends State<ItemCard> {
-  @override
   Widget build(BuildContext context) {
+    Color statusColor = Colors.red;
+    if (widget.status.toLowerCase().contains("available")) {
+      statusColor = Colors.green;
+    } else if (widget.status.toLowerCase().contains("damaged")) {
+      statusColor = Colors.red;
+    } else if (widget.status.toLowerCase().contains("borrowed")) {
+      statusColor = Colors.yellow;
+    }
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -64,11 +72,11 @@ class _ItemCardState extends State<ItemCard> {
           // Availability
           Row(
             children: [
-              Icon(Icons.circle, color: Colors.green, size: 10),
+              Icon(Icons.circle, color: statusColor, size: 10),
               SizedBox(width: 4),
               Text(
                 widget.status,
-                style: TextStyle(color: Colors.green, fontSize: 12),
+                style: TextStyle(color: statusColor, fontSize: 12),
               ),
             ],
           ),
@@ -81,7 +89,7 @@ class _ItemCardState extends State<ItemCard> {
                 color: Colors.blue,
                 borderRadius: BorderRadius.circular(6),
               ),
-              padding: const EdgeInsets.all(4), // Optional: adjust if needed
+              padding: const EdgeInsets.all(4),
               child: IconButton(
                 icon: const Icon(
                   Icons.arrow_forward,
@@ -94,6 +102,7 @@ class _ItemCardState extends State<ItemCard> {
                     MaterialPageRoute(
                       builder: (context) {
                         return ItemDetail(
+                          id: widget.id.toInt(),
                           name: widget.name,
                           desc: widget.desc,
                           image: widget.image,
@@ -101,7 +110,6 @@ class _ItemCardState extends State<ItemCard> {
                           status: widget.status,
                           itemTypeId: widget.itemTypeId,
                           subCatId: widget.subCatId,
-                          id: widget.id,
                         );
                       },
                     ),
